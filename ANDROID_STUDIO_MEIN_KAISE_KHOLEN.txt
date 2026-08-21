@@ -1,0 +1,59 @@
+═══════════════════════════════════════════════════
+   GK Quiz Hindi - Native Android Project
+   (Flutter ki zaroorat NAHI hai!)
+═══════════════════════════════════════════════════
+
+ANDROID STUDIO MEIN KHOLNE KE STEPS:
+──────────────────────────────────────
+1. Android Studio open karein
+
+2. "Open" ya "Open an Existing Project" click karein
+
+3. Is folder ko select karein:
+   C:\Users\Mukesh Thakur\Downloads\GKQuizAndroid
+
+4. "OK" click karein
+
+5. Gradle sync hone dein (2-3 minute lagenge)
+   (Bottom mein progress bar dikhega)
+
+6. Sync complete hone ke baad:
+
+APK BANANE KE LIYE:
+──────────────────────
+Menu: Build → Build Bundle(s)/APK(s) → Build APK(s)
+
+Ya Shortcut: Ctrl+F9
+
+APK milega yahan:
+GKQuizAndroid\app\build\outputs\apk\release\
+
+RELEASE APK (Chhoti size) ke liye:
+Build → Generate Signed Bundle/APK → APK → Next
+(Pehli baar ek keystore banana hoga - Android Studio guide karega)
+
+═══════════════════════════════════════════════════
+APP MEIN KYA HAI:
+──────────────────
+✅ 300+ Hindi GK Questions
+✅ 12 Categories
+✅ 30 Second Timer
+✅ Green/Red color feedback
+✅ Score tracking (SharedPreferences)
+✅ Review answers screen
+✅ ~5-8 MB APK size
+
+CATEGORIES:
+ 1. भारतीय इतिहास (35 Q)
+ 2. भूगोल (30 Q)
+ 3. विज्ञान (30 Q)
+ 4. राजनीति (23 Q)
+ 5. अर्थव्यवस्था (15 Q)
+ 6. खेल (15 Q)
+ 7. सामयिकी (18 Q)
+ 8. सामान्य ज्ञान (22 Q)
+ 9. कंप्यूटर (17 Q)
+10. पुरस्कार (11 Q)
+11. कला और संस्कृति (12 Q)
+12. पर्यावरण (13 Q)
+═══════════════════════════════════════════════════
