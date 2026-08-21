@@ -6,6 +6,7 @@
 
 **A bilingual General Knowledge quiz app for Android — 300+ hand-curated offline questions plus a live trivia mode, built fully native with zero dependencies on a backend.**
 
+[![CI](https://github.com/mukeshkumar356/gyaanguru-quiz/actions/workflows/android-ci.yml/badge.svg)](https://github.com/mukeshkumar356/gyaanguru-quiz/actions/workflows/android-ci.yml)
 [![Platform](https://img.shields.io/badge/platform-Android-3DDC84?logo=android&logoColor=white)](#)
 [![Language](https://img.shields.io/badge/language-Java-ED8B00?logo=openjdk&logoColor=white)](#)
 [![Min SDK](https://img.shields.io/badge/minSdk-26-blue)](#)
