@@ -107,6 +107,7 @@ public class OnlineQuizActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         });
+        executor.shutdown(); // the single submitted task still runs; this just stops the pool from leaking
     }
 
     private List<Question> fetchQuestions(String apiUrl, String catName) {
