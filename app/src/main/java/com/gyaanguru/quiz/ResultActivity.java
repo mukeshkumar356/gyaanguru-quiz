@@ -31,15 +31,11 @@ public class ResultActivity extends AppCompatActivity {
         Button btnHome = findViewById(R.id.btn_home);
         Button btnRetry = findViewById(R.id.btn_retry);
 
-        int pct = (score * 100) / total;
-        String grade;
-        int color;
-        if (pct >= 90) { grade = "शानदार!"; color = Color.parseColor("#4CAF50"); }
-        else if (pct >= 70) { grade = "बहुत अच्छा!"; color = Color.parseColor("#1E88E5"); }
-        else if (pct >= 50) { grade = "अच्छा!"; color = Color.parseColor("#FF9800"); }
-        else { grade = "और पढ़ें!"; color = Color.parseColor("#F44336"); }
+        int pct = QuizGradeCalculator.calculatePercentage(score, total);
+        QuizGradeCalculator.Grade grade = QuizGradeCalculator.gradeFor(pct);
+        int color = Color.parseColor(grade.colorHex);
 
-        tvGrade.setText(grade);
+        tvGrade.setText(grade.label);
         tvGrade.setTextColor(color);
         tvScore.setText(pct + "%");
         tvScore.setTextColor(color);
