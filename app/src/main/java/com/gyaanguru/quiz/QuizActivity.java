@@ -154,11 +154,22 @@ public class QuizActivity extends AppCompatActivity {
 
         if (selected == correct) score++;
 
-        tvTimer.postDelayed(() -> {
-            currentIndex++;
-            loadQuestion();
-        }, 1200);
+        tvTimer.postDelayed(advanceToNextQuestion, 1200);
     }
+
+    // Kept as a field (not a local lambda in handleAnswer) so onDestroy can
+    // remove this exact pending callback - otherwise, backing out of the quiz
+    // within the 1.2s answer-reveal delay leaves this running: it calls
+    // loadQuestion() on the destroyed activity, which starts a new
+    // CountDownTimer, which on timeout posts another one of these, and so on
+    // - silently auto-playing through every remaining question in the
+    // background (burning battery/CPU) until it finally calls startActivity
+    // from a dead context. Same leak category as the ExecutorService fix in
+    // OnlineQuizActivity, just via Handler/CountDownTimer instead.
+    private final Runnable advanceToNextQuestion = () -> {
+        currentIndex++;
+        loadQuestion();
+    };
 
     private void endQuiz() {
         SharedPreferences prefs = getSharedPreferences("GKQuiz", MODE_PRIVATE);
@@ -200,5 +211,6 @@ public class QuizActivity extends AppCompatActivity {
     @Override protected void onDestroy() {
         super.onDestroy();
         if (timer != null) timer.cancel();
+        tvTimer.removeCallbacks(advanceToNextQuestion);
     }
 }
