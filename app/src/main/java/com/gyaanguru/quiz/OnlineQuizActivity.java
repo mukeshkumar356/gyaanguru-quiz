@@ -93,6 +93,9 @@ public class OnlineQuizActivity extends AppCompatActivity {
         executor.execute(() -> {
             List<Question> fetched = fetchQuestions(apiUrl, catName);
             handler.post(() -> {
+                // The fetch can take up to ~16s; if the user already backed out,
+                // don't touch views or launch a quiz from a finished activity.
+                if (isFinishing() || isDestroyed()) return;
                 loader.setVisibility(View.GONE);
                 btnStart.setEnabled(true);
 
