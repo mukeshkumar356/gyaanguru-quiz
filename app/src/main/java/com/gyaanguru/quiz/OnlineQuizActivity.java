@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -114,19 +115,22 @@ public class OnlineQuizActivity extends AppCompatActivity {
     }
 
     private List<Question> fetchQuestions(String apiUrl, String catName) {
+        HttpURLConnection conn = null;
         try {
             URL url = new URL(apiUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setConnectTimeout(8000);
             conn.setReadTimeout(8000);
 
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream()));
+            // try-with-resources so the stream is closed even if a read or the
+            // JSON parse below throws (previously reader.close() was skipped).
             StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) sb.append(line);
-            reader.close();
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) sb.append(line);
+            }
 
             JSONObject root = new JSONObject(sb.toString());
             if (root.getInt("response_code") != 0) return null;
@@ -153,6 +157,8 @@ public class OnlineQuizActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             return null;
+        } finally {
+            if (conn != null) conn.disconnect();
         }
     }
 
