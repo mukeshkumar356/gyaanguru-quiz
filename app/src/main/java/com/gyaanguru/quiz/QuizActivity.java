@@ -74,6 +74,17 @@ public class QuizActivity extends AppCompatActivity {
             List<Question> all = QuestionBank.getByCategory(category);
             questions = new ArrayList<>(all.subList(0, Math.min(MAX_Q, all.size())));
         }
+
+        // pendingOnlineQuestions is a static field, so it is empty if Android
+        // recreated this activity after killing the process (or for an unknown
+        // category). Without this guard loadQuestion() would go straight to
+        // endQuiz() and show a bogus 0/0 result screen.
+        if (questions.isEmpty()) {
+            Toast.makeText(this, "Questions load nahi ho paayi. Dobara try karein.",
+                    Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
         loadQuestion();
     }
 
