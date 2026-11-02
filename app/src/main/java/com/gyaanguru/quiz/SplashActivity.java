@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private final Handler handler = new Handler(Looper.getMainLooper());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,7 @@ public class SplashActivity extends AppCompatActivity {
         logoSet.start();
 
         // Developer credit + photo slides up after 600ms
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+        handler.postDelayed(() -> {
             devRow.setTranslationY(30f);
             ObjectAnimator devFade  = ObjectAnimator.ofFloat(devRow, "alpha", 0f, 1f);
             ObjectAnimator devSlide = ObjectAnimator.ofFloat(devRow, "translationY", 30f, 0f);
@@ -51,9 +53,17 @@ public class SplashActivity extends AppCompatActivity {
         }, 600);
 
         // Launch home after 2.4 seconds
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+        handler.postDelayed(() -> {
             startActivity(new Intent(SplashActivity.this, HomeActivity.class));
             finish();
         }, 2400);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // If the user backs out during the splash, don't let the pending
+        // callbacks start HomeActivity (or touch views) after this is gone.
+        handler.removeCallbacksAndMessages(null);
     }
 }
