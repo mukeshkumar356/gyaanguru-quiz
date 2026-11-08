@@ -9,7 +9,22 @@ import java.util.Set;
 
 public class QuestionBank {
 
-    public static List<Question> getAllQuestions() {
+    private static List<Question> cachedQuestions;
+
+    /**
+     * The question list is static data, but it used to be rebuilt (hundreds of
+     * Question objects) on every call - and CategoryAdapter calls
+     * countByCategory() once per category tile bind. Build it once and reuse.
+     * The returned list is read-only; getByCategory() copies before shuffling.
+     */
+    public static synchronized List<Question> getAllQuestions() {
+        if (cachedQuestions == null) {
+            cachedQuestions = Collections.unmodifiableList(buildAllQuestions());
+        }
+        return cachedQuestions;
+    }
+
+    private static List<Question> buildAllQuestions() {
         List<Question> q = new ArrayList<>();
 
         // ── भारतीय इतिहास ───────────────────────────────────────────
