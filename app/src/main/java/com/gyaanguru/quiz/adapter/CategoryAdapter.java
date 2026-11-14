@@ -19,8 +19,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.VH> {
     private final List<String> categories;
     private final OnCategoryClick listener;
 
-    private final String[] EMOJIS = {"📚","🌍","🔬","⚖️","💰","🏏","📰","💡","💻","🏆","🎨","🌿"};
-    private final int[] COLORS = {
+    private static final String[] EMOJIS = {"📚","🌍","🔬","⚖️","💰","🏏","📰","💡","💻","🏆","🎨","🌿"};
+    private static final int[] COLORS = {
         0xFFE53935, 0xFF1E88E5, 0xFF43A047, 0xFF8E24AA,
         0xFFFF6F00, 0xFF00897B, 0xFFD81B60, 0xFF3949AB,
         0xFF0097A7, 0xFFF57F17, 0xFF6A1B9A, 0xFF2E7D32
@@ -49,8 +49,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.VH> {
         h.tvName.setText(cat);
         h.tvCount.setText(count + " प्रश्न");
         h.card.setCardBackgroundColor(Color.WHITE);
-        h.tvEmoji.setBackgroundColor(color & 0x33FFFFFF | (color & 0xFF000000));
-
         int alpha = 0x22;
         int bgColor = (alpha << 24) | (color & 0x00FFFFFF);
         h.tvEmoji.setBackgroundColor(bgColor);
