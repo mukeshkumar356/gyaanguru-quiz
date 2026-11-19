@@ -35,6 +35,8 @@ public class HomeActivity extends AppCompatActivity {
         // Online Quiz button
         findViewById(R.id.btn_online_quiz).setOnClickListener(v -> {
             Intent i = new Intent(this, OnlineQuizActivity.class);
+            // SINGLE_TOP: a quick double-tap would otherwise stack two copies.
+            i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(i);
         });
 
@@ -44,6 +46,10 @@ public class HomeActivity extends AppCompatActivity {
     private void startQuiz(String category) {
         Intent intent = new Intent(this, QuizActivity.class);
         intent.putExtra("category", category);
+        // SINGLE_TOP: a quick double-tap on a category tile (or two tiles) would
+        // otherwise stack two QuizActivity instances, so after finishing the
+        // first quiz the user would land in a second, unrelated quiz instead of Home.
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 
